@@ -1,9 +1,8 @@
 FROM php:5.6-cli-alpine
 
-COPY ./dirscan-bootstrap.php /usr/local/lib/php/
+RUN apk add --no-cache tini && \
+    wget -O /usr/local/bin/dirscan https://github.com/vincepare/DirScan/releases/download/1.3.0/dirscan.phar && chmod +x /usr/local/bin/dirscan
 
-RUN mkdir -p /tmp/.dirscan && \
-    wget -O /tmp/.dirscan/dirscan https://github.com/vincepare/DirScan/releases/download/1.2.1/dirscan.phar && chmod +x /tmp/.dirscan/dirscan && \
-    echo "auto_prepend_file = /usr/local/lib/php/dirscan-bootstrap.php" > /usr/local/etc/php/conf.d/dirscan-bootstrap.ini
+COPY ./run.sh /run.sh
 
-ENTRYPOINT ["/tmp/.dirscan/dirscan"]
+ENTRYPOINT ["/sbin/tini", "--", "/run.sh"]

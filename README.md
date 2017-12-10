@@ -8,5 +8,5 @@ On the container, `dirscan` runs inside a chrooted environnement to make everyth
 
 ### Example
 ```bash
-docker run -i --rm -v "/":"/hostfs:ro" -v "/tmp/.dirscan":"/hostfs/tmp/.dirscan" -e "DIRSCAN_PWD=$(pwd)" vincepare/dirscan --full --same-device /tmp > "tmp.dirscan.txt"
+docker run -i --rm -v "/":"/hostfs:ro" -e "DIRSCAN_PWD=$(pwd)" vincepare/dirscan --full --same-device /tmp > "tmp.dirscan.txt"
 ```
